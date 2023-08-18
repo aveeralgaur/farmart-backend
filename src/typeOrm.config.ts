@@ -7,12 +7,11 @@ export const getDatabaseConfig = async (
 ): Promise<TypeOrmModuleOptions> => {
   return {
     type: "mysql",
-    host: configService.get<string>("DB_HOSTNAME") || "sql.freedb.tech",
+    host: configService.get<string>("DB_HOSTNAME") || "localhost",
     port: configService.get<number>("DB_PORT") || 3306,
-    username:
-      configService.get<string>("DB_USERNAME") || "freedb_file-upload-user",
-    password: configService.get<string>("DB_PASSWORD") || "KQkS*fD#S!S2fpM",
-    database: configService.get<string>("DB_NAME") || "freedb_fileupload",
+    username: configService.get<string>("DB_USERNAME") || "root",
+    password: configService.get<string>("DB_PASSWORD") || "password",
+    database: configService.get<string>("DB_NAME") || "farmart",
     entities: ["dist/**/*.entity{.ts,.js}", files],
     synchronize: true,
   };
