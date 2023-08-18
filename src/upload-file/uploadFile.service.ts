@@ -1,16 +1,16 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { files } from './entities/files.entity';
-import { S3 } from 'aws-sdk';
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { files } from "./entities/files.entity";
+import { S3 } from "aws-sdk";
 
 @Injectable()
 export class UploadFileService {
   constructor(
     private configService: ConfigService,
     @InjectRepository(files)
-    private filesRepository: Repository<files>,
+    private filesRepository: Repository<files>
   ) {}
 
   async UploadFileToS3(file: Express.Multer.File): Promise<string> {
@@ -20,15 +20,15 @@ export class UploadFileService {
         const expectedSizeBytes = 20 * 1024 * 1024; // 20 MB in bytes
         if (fileSizeBytes > expectedSizeBytes) {
           throw new BadRequestException(
-            'Total file size exceeds the limit of 20 MB.',
+            "Total file size exceeds the limit of 20 MB."
           );
         } else {
           const s3 = new S3({
-            accessKeyId: this.configService.get<string>('ACCESS_KEY_ID'),
+            accessKeyId: this.configService.get<string>("ACCESS_KEY_ID"),
             secretAccessKey:
-              this.configService.get<string>('SECRET_ACCESS_KEY'),
+              this.configService.get<string>("SECRET_ACCESS_KEY"),
           });
-          const bucketName = `${this.configService.get<string>('BUCKET_NAME')}`;
+          const bucketName = `${this.configService.get<string>("BUCKET_NAME")}`;
           const uploadResult = await s3
             .upload({
               Bucket: bucketName,
@@ -46,7 +46,7 @@ export class UploadFileService {
           return shortUrl;
         }
       } else {
-        throw new BadRequestException('No file selected.');
+        throw new BadRequestException("No file selected..");
       }
     } catch (error) {
       throw error;
@@ -55,10 +55,10 @@ export class UploadFileService {
 
   generateShortUrlId() {
     const alphabet =
-      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const base = alphabet.length;
     let num = Math.floor(Math.random() * Math.pow(base, 6)); // 6 characters
-    let shortUrlId = '';
+    let shortUrlId = "";
     while (num > 0) {
       shortUrlId = alphabet[num % base] + shortUrlId;
       num = Math.floor(num / base);
@@ -79,7 +79,7 @@ export class UploadFileService {
       if (files.length != 0) {
         return files;
       } else {
-        throw new BadRequestException('No Links Found.');
+        throw new BadRequestException("No Links Found.");
       }
     } catch (error) {
       throw error;
