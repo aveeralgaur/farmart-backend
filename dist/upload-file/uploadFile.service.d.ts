@@ -1,7 +1,7 @@
 /// <reference types="multer" />
-import { ConfigService } from '@nestjs/config';
-import { Repository } from 'typeorm';
-import { files } from './entities/files.entity';
+import { ConfigService } from "@nestjs/config";
+import { Repository } from "typeorm";
+import { files } from "./entities/files.entity";
 export declare class UploadFileService {
     private configService;
     private filesRepository;

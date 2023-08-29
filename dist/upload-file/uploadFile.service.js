@@ -30,14 +30,14 @@ let UploadFileService = class UploadFileService {
                 const fileSizeBytes = file.size;
                 const expectedSizeBytes = 20 * 1024 * 1024;
                 if (fileSizeBytes > expectedSizeBytes) {
-                    throw new common_1.BadRequestException('Total file size exceeds the limit of 20 MB.');
+                    throw new common_1.BadRequestException("Total file size exceeds the limit of 20 MB.");
                 }
                 else {
                     const s3 = new aws_sdk_1.S3({
-                        accessKeyId: this.configService.get('ACCESS_KEY_ID'),
-                        secretAccessKey: this.configService.get('SECRET_ACCESS_KEY'),
+                        accessKeyId: this.configService.get("ACCESS_KEY_ID"),
+                        secretAccessKey: this.configService.get("SECRET_ACCESS_KEY"),
                     });
-                    const bucketName = `${this.configService.get('BUCKET_NAME')}`;
+                    const bucketName = `${this.configService.get("BUCKET_NAME")}`;
                     const uploadResult = await s3
                         .upload({
                         Bucket: bucketName,
@@ -56,7 +56,7 @@ let UploadFileService = class UploadFileService {
                 }
             }
             else {
-                throw new common_1.BadRequestException('No file selected.');
+                throw new common_1.BadRequestException("No file selected..");
             }
         }
         catch (error) {
@@ -64,10 +64,10 @@ let UploadFileService = class UploadFileService {
         }
     }
     generateShortUrlId() {
-        const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         const base = alphabet.length;
         let num = Math.floor(Math.random() * Math.pow(base, 6));
-        let shortUrlId = '';
+        let shortUrlId = "";
         while (num > 0) {
             shortUrlId = alphabet[num % base] + shortUrlId;
             num = Math.floor(num / base);
@@ -87,7 +87,7 @@ let UploadFileService = class UploadFileService {
                 return files;
             }
             else {
-                throw new common_1.BadRequestException('No Links Found.');
+                throw new common_1.BadRequestException("No Links Found.");
             }
         }
         catch (error) {

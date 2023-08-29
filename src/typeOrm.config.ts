@@ -7,11 +7,14 @@ export const getDatabaseConfig = async (
 ): Promise<TypeOrmModuleOptions> => {
   return {
     type: "mysql",
-    host: configService.get<string>("DB_HOSTNAME") || "localhost",
-    port: configService.get<number>("DB_PORT") || 3306,
+    host:
+      configService.get<string>("DB_HOSTNAME") ||
+      "containers-us-west-78.railway.app",
+    port: configService.get<number>("DB_PORT") || 7899,
     username: configService.get<string>("DB_USERNAME") || "root",
-    password: configService.get<string>("DB_PASSWORD") || "password",
-    database: configService.get<string>("DB_NAME") || "farmart",
+    password:
+      configService.get<string>("DB_PASSWORD") || "ZLeyBv94UuPElNdoDViF",
+    database: configService.get<string>("DB_NAME") || "railway",
     entities: ["dist/**/*.entity{.ts,.js}", files],
     synchronize: true,
   };
